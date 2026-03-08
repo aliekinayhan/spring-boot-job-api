@@ -8,6 +8,9 @@ public class JobApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JobApiApplication.class, args);
-	}
 
+
+
+
+	}
 }
