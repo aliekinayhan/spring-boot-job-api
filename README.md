@@ -1,1 +1,1 @@
-initial commit  
+A RESTful Job Posting API built with Spring Boot, Spring Data JPA, and MySQL.
