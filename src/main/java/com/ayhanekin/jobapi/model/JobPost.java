@@ -2,11 +2,13 @@ package com.ayhanekin.jobapi.model;
 
 import com.ayhanekin.jobapi.enums.JobType;
 import com.ayhanekin.jobapi.enums.WorkType;
+import com.github.f4b6a3.uuid.UuidCreator;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "job_post")
@@ -18,9 +20,8 @@ import java.util.List;
 public class JobPost {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_id")
-    private Integer id;
+    private UUID id;
 
     @Column(nullable = false, length = 256)
     private String title;
@@ -43,6 +44,11 @@ public class JobPost {
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;
+
+    @PrePersist
+    public void generateId() {
+        this.id = UuidCreator.getTimeOrderedEpoch();
+    }
 
 
 }

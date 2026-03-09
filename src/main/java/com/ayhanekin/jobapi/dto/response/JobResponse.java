@@ -10,13 +10,14 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobResponse {
-    private Integer id;
+    private UUID id;
     private String title;
     private BigDecimal salary;
     private Integer experience;
