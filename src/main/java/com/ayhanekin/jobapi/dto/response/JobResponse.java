@@ -2,7 +2,6 @@ package com.ayhanekin.jobapi.dto.response;
 
 import com.ayhanekin.jobapi.enums.JobType;
 import com.ayhanekin.jobapi.enums.WorkType;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
