@@ -3,13 +3,13 @@ package com.ayhanekin.jobapi.service;
 import com.ayhanekin.jobapi.dto.request.CreateJobRequest;
 import com.ayhanekin.jobapi.dto.request.UpdateJobRequest;
 import com.ayhanekin.jobapi.dto.response.JobResponse;
-import com.ayhanekin.jobapi.exception.JobNotFoundException;
+import com.ayhanekin.jobapi.exception.ResourceNotFoundException;
 import com.ayhanekin.jobapi.mapper.JobMapper;
 import com.ayhanekin.jobapi.model.JobPost;
 import com.ayhanekin.jobapi.repo.JobRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class JobService {
 
     public JobResponse getJobPost(UUID id) {
         return mapper.toResponse(repo.findById(id)
-                .orElseThrow(() -> new JobNotFoundException(id)));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + id)));
     }
 
     public JobResponse save(CreateJobRequest request) {
@@ -36,8 +36,8 @@ public class JobService {
 
     public JobResponse update(UUID id, UpdateJobRequest jobRequest) {
         JobPost jobPost = repo.findById(id).orElseThrow(() ->
-                (new JobNotFoundException(id)));
-        mapper.updateJobPost(jobRequest,jobPost);
+                (new ResourceNotFoundException("Job not found with id: " + id)));
+        mapper.updateJobPost(jobRequest, jobPost);
         repo.save(jobPost);
 
 
@@ -46,9 +46,9 @@ public class JobService {
     }
 
     public void delete(UUID id) {
-        if (!repo.existsById(id)){
-            throw new JobNotFoundException(id);
-        }else {
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("This job already does not exist: " + id);
+        } else {
             repo.deleteById(id);
         }
     }

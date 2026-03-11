@@ -15,30 +15,30 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/jobs")
+@RequestMapping("/api/v1/")
 public class JobController {
 
     private final JobService service;
 
 
-    @GetMapping("/jobs")
+    @GetMapping("jobs")
     public List<JobResponse> getAllJobPosts() {
 
         return service.getAllJobs();
     }
 
-    @GetMapping("/jobs/{id}")
+    @GetMapping("jobs/{id}")
     public JobResponse getJobPost(@PathVariable UUID id) {
 
         return service.getJobPost(id);
     }
 
-    @PostMapping("/jobs")
+    @PostMapping("jobs")
     public JobResponse createJob(@Valid @RequestBody CreateJobRequest jobRequest) {
         return service.save(jobRequest);
     }
 
-    @PutMapping("/jobs/{id}")
+    @PutMapping("jobs/{id}")
     public ResponseEntity<JobResponse> updateJob(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateJobRequest request) {
@@ -47,7 +47,7 @@ public class JobController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/jobs/{id}")
+    @DeleteMapping("jobs/{id}")
     public void deleteJob(@PathVariable UUID id) {
         service.delete(id);
     }

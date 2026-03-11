@@ -1,21 +1,18 @@
 package com.ayhanekin.jobapi.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 // Blueprint of api error response format.
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class ApiErrorResponse {
 
-    private String error;
-    private String message;
+    private String timestamp;
     private int status;
+    private ErrorCode error;
+    private String message;
+    private String path;
 
 }
