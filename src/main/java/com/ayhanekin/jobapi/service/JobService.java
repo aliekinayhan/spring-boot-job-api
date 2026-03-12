@@ -8,9 +8,9 @@ import com.ayhanekin.jobapi.mapper.JobMapper;
 import com.ayhanekin.jobapi.model.JobPost;
 import com.ayhanekin.jobapi.repo.JobRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -21,8 +21,9 @@ public class JobService {
     private final JobMapper mapper;
 
 
-    public List<JobResponse> getAllJobs() {
-        return mapper.toResponseList(repo.findAll());
+    public Slice<JobResponse> getAllJobs(Pageable pageable) {
+        Slice<JobPost> jobs = repo.findAllBy(pageable);
+        return jobs.map(mapper::toResponse);
     }
 
     public JobResponse getJobPost(UUID id) {

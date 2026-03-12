@@ -3,10 +3,12 @@ package com.ayhanekin.jobapi.controller;
 import com.ayhanekin.jobapi.dto.request.CreateJobRequest;
 import com.ayhanekin.jobapi.dto.request.UpdateJobRequest;
 import com.ayhanekin.jobapi.dto.response.JobResponse;
-import com.ayhanekin.jobapi.model.JobPost;
 import com.ayhanekin.jobapi.service.JobService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +24,8 @@ public class JobController {
 
 
     @GetMapping("jobs")
-    public List<JobResponse> getAllJobPosts() {
-
-        return service.getAllJobs();
+    public ResponseEntity<Slice<JobResponse>> getAllJobPosts(@PageableDefault(size = 15) Pageable pageable) {
+        return ResponseEntity.ok(service.getAllJobs(pageable));
     }
 
     @GetMapping("jobs/{id}")
