@@ -6,7 +6,6 @@ import com.ayhanekin.jobapi.dto.response.JobResponse;
 import com.ayhanekin.jobapi.model.JobPost;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-
 import java.util.List;
 
 //CreateJobRequest → JobPost
