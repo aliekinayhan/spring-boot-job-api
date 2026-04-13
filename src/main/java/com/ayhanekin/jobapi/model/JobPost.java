@@ -38,8 +38,10 @@ public class JobPost {
     private List<String> techStack;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "work_type", nullable = false)
     private WorkType workType;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "job_type", nullable = false)
     private JobType jobType;
 }

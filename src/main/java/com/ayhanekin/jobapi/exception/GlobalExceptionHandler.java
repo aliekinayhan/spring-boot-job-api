@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(ResourceNotFoundException.class) // If this class works call this method
-    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(ResourceNotFoundException exception,HttpServletRequest request){
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFound(ResourceNotFoundException exception, HttpServletRequest request) {
 
         ApiErrorResponse response = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now().toString())
@@ -89,11 +90,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiErrorResponse> handleTypeMismatch(
+            MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
 
+        String message = "Invalid value '" + ex.getValue() + "' for parameter '" + ex.getName() + "'";
 
+        ApiErrorResponse response = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(ErrorCode.BAD_REQUEST)
+                .message(message)
+                .path(request.getRequestURI())
+                .build();
 
-
-
-
-
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 }
