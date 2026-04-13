@@ -10,5 +10,6 @@ import java.util.UUID;
 @Repository
 public interface JobRepo extends JpaRepository<JobPost, UUID> {
 
+
     Slice<JobPost> findAllBy(Pageable pageable);
 }
